@@ -1,0 +1,100 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.kstore</groupId>
+		<artifactId>kstore-parent</artifactId>
+		<version>1.0</version>
+	</parent>
+	
+	<groupId>org.kstore</groupId>
+	<artifactId>kstore-sample</artifactId>
+	<packaging>jar</packaging>
+	<version>1.0</version>
+
+	<name>KStore.Samples</name>
+	<description>POM for building the KStore Sample</description>
+	<organization>
+		<name>Indexima</name>
+		<url>http://www.indexima.com/</url>
+	</organization>
+	<licenses>
+		<license>
+			<name>Copyright Indexima</name>
+		</license>
+	</licenses>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.kstore</groupId>
+			<artifactId>kstore-core</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.kstore</groupId>
+			<artifactId>kstore-s3</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.kstore</groupId>
+			<artifactId>kstore-hdfs</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.kstore</groupId>
+			<artifactId>kstore-core</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.iq80.snappy</groupId>
+			<artifactId>snappy</artifactId>
+			<version>0.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.8</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-s3</artifactId>
+			<version>1.11.381</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.9.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.9.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.adobe.testing</groupId>
+			<artifactId>s3mock-junit4</artifactId>
+			<version>2.0.2</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+</project>

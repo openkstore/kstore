@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Properties>
+		<Property name="LOG_PATTERN">%d{yyyy-MM-dd_HH:mm:ss} %5p [%t] %c - %m%n</Property>
+	</Properties>
+	<Appenders>
+		<!-- Default appender in console. Only STDOUT -->
+		<Console name="ConsoleAppender" target="SYSTEM_OUT">
+			<PatternLayout pattern="${LOG_PATTERN}"/>
+		</Console>
+		<!-- Create an async appender for console logs -->
+		<Async name="AsyncConsoleAppender">
+			<AppenderRef ref="ConsoleAppender"/>
+		</Async>
+	</Appenders>
+	<Loggers>
+		<Root level="INFO">
+            <AppenderRef ref="AsyncConsoleAppender"/>
+        </Root>
+	</Loggers>
+</Configuration>

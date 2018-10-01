@@ -1,0 +1,15 @@
+target
+.classpath
+.project
+.settings
+
+*.iml
+.idea/
+
+\.DS_Store
+
+kstore-benchmarks/nbactions\.xml
+
+kstore-benchmarks/nb-configuration\.xml
+
+kstore-benchmarks/nbactions-prepareRun\.xml
