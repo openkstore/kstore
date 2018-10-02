@@ -50,16 +50,14 @@ public class DefaultKStore implements KStore {
 	/** Buckets of the store. */
 	private final List<Bucket> buckets = new ArrayList<>();
 
-	/**
-	 * Constructor.
-	 *
-	 * @param name
-	 * @param columns
-	 * @param device
-	 */
-	public DefaultKStore(String name, List<Column> columns, Device device) {
+	public DefaultKStore(String name, List<Column> columns, String directory) {
+		this(name, columns, directory, new FileSystemDevice());
+	}
+
+	public DefaultKStore(String name, List<Column> columns, String directory, Device device) {
 		this.name = name;
 		this.columns = columns;
+		setDirectory(directory);
 		this.device = device;
 	}
 
@@ -68,28 +66,16 @@ public class DefaultKStore implements KStore {
 		return device;
 	}
 
-	/**
-	 * @see KStore.getName()
-	 * @return
-	 */
 	@Override
 	public String getName() {
 		return name;
 	}
 
-	/**
-	 * @see KStore.useOneFilePerColumn()
-	 * @return
-	 */
 	@Override
 	public boolean useOneFilePerColumn() {
 		return Configuration.isOneFilePerColumn();
 	}
 
-	/**
-	 * @see KStore.getNumberOfColumns()
-	 * @return
-	 */
 	@Override
 	public int getNumberOfColumns() {
 		return columns.size();
@@ -122,7 +108,7 @@ public class DefaultKStore implements KStore {
 		return directory;
 	}
 
-	public void setDirectory(String directory) {
+	private void setDirectory(String directory) {
 		this.directory = directory;
 		// be sure directory path is well terminated
 		if (!directory.endsWith("/")) {

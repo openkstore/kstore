@@ -191,8 +191,24 @@ public class PageBucket extends Bucket {
 
 		List<ColumnInput> asList = openColumns(openFilesConcurrently, rf, colIds, in, pageBytesProvider);
 
-		for (int n = 1; n < in.length; n++) {
-			in[n] = asList.get(n - 1);
+		boolean nullColumnInputFound = false;
+
+		for (int n = 1 ; n < in.length ; n++) {
+			in[n] = asList.get(n-1);
+			if (in[n] == null) {
+				nullColumnInputFound = true;
+			}
+		}
+
+		if (nullColumnInputFound) {
+			IO.close(in);
+			StringBuilder sb = new StringBuilder();
+			for (int n = 1 ; n < in.length ; n++) {
+				if (in[n] == null) {
+					sb.append(n).append(" ");
+				}
+			}
+			throw new IOException("Unable to read columns (" + sb.toString() + ")");
 		}
 		return new MultipleInputStream(openFilesConcurrently, in);
 	}
@@ -217,7 +233,7 @@ public class PageBucket extends Bucket {
 			}
 		}).collect(Collectors.toList());
 
-		return Futures.getUnchecked(Futures.allAsList(futureInputs));
+		return Futures.getUnchecked(Futures.successfulAsList(futureInputs));
 	}
 
 	private ColumnInput openOneColumn(RowFile rf, int[] colIds,
@@ -237,10 +253,11 @@ public class PageBucket extends Bucket {
 	}
 
 	private InputStream readColumn(RowFile rf, int colId) {
+		String colPath = getColPath(COL + colId + rf.getPost());
 		try {
-			return store.getDevice().getInputStream(getColPath(COL + colId + rf.getPost()));
+			return store.getDevice().getInputStream(colPath);
 		} catch (IOException e) {
-			throw new UncheckedIOException(e);
+			throw new UncheckedIOException("Unable to read column (" + colPath + ")", e);
 		}
 	}
 
@@ -257,7 +274,7 @@ public class PageBucket extends Bucket {
 	}
 
 	@Override
-	public void add(int keyId, Object[] values) throws IOException {
+	public PageBucket add(int keyId, Object[] values) throws IOException {
 		if (out == null) {
 			initOut();
 		}
@@ -292,6 +309,7 @@ public class PageBucket extends Bucket {
 			}
 		}
 		addRow();
+		return this;
 	}
 
 	private void addRow() throws IOException {
@@ -312,10 +330,11 @@ public class PageBucket extends Bucket {
 	}
 
 	@Override
-	public void readLines(Line line, int[] columns, RoaringBitmap bitRowIds, LineReader liner) throws IOException {
+	public void readLines(Line line, RoaringBitmap bitRowIds, LineReader liner) throws IOException {
 		if (countCommit == 0) {
 			return;
 		}
+		int[] columns = line.getColumns();
 		int[] indexInOriginal = computerIndexOfSorted(columns);
 
 		long count = 0;
@@ -517,8 +536,7 @@ public class PageBucket extends Bucket {
 	}
 
 	void loadOne(RowFile rf, int icol, BucketLoader loader) throws IOException {
-		MultiInputStream in = openReadCol(rf, new int[]{icol});
-		try {
+		try (MultiInputStream in = openReadCol(rf, new int[]{icol})) {
 			byte[] buf = new byte[(store.getColumn(icol).getSize() == 0) ? Short.MAX_VALUE + 2 : 8];
 			int rowNum = 0;
 			for (int ipage = 0; ipage < rf.getPosCount().getSize(); ipage++) {
@@ -532,8 +550,6 @@ public class PageBucket extends Bucket {
 					loader.loadOne(rowNum, rowId, buf, lg);
 				}
 			}
-		} finally {
-			IO.close(in);
 		}
 	}
 

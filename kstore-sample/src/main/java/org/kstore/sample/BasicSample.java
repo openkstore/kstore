@@ -15,22 +15,25 @@
  */
 package org.kstore.sample;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.kstore.Bucket;
 import org.kstore.Column;
 import org.kstore.ColumnType;
+import org.kstore.KStore;
 import org.kstore.Line;
+import org.kstore.Range;
 import org.kstore.impl.DefaultColumn;
 import org.kstore.impl.DefaultKStore;
 import org.kstore.impl.DefaultLine;
-import org.kstore.impl.FileSystemDevice;
+import org.kstore.utils.BucketIOSharedPool;
 import org.roaringbitmap.RoaringBitmap;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -45,73 +48,36 @@ public class BasicSample {
 		try {
 			// let's define our schema
 			List<Column> schema = new ArrayList<>();
-			DefaultColumn continent = new DefaultColumn(ColumnType.STRING);
-			DefaultColumn country = new DefaultColumn(ColumnType.STRING);
-			DefaultColumn population = new DefaultColumn(ColumnType.BIGINT);
-			DefaultColumn density = new DefaultColumn(ColumnType.DOUBLE);
-
-			schema.add(continent);
+			Column country = new DefaultColumn(ColumnType.STRING);
+			Column population = new DefaultColumn(ColumnType.BIGINT);
 			schema.add(country);
 			schema.add(population);
-			schema.add(density);
 
 			// create our KStore on a file system device
-			FileSystemDevice fs = new FileSystemDevice();
-			DefaultKStore kstore = new DefaultKStore("TheWorld", schema, fs);
 			Path temp = Files.createTempDirectory("kstore");
-			kstore.setDirectory(temp.toString());
+			KStore kstore = new DefaultKStore("TheWorld", schema, temp.toString());
 
 			// create a bucket to enter some data
 			Bucket bucket = kstore.newBucket();
 			// insert lines in out bucket
-			bucket.add(0, new Object[]{"Europe", "France", 67795000L, 100.8D});
-			bucket.add(1, new Object[]{"Oceania", "New Zealand", 4725487L, 18.D});
-			bucket.add(2, new Object[]{"Asia", "Japan", 126451398L, 334.6D});
-			// commit our changes
-			bucket.commit();
+			bucket.add(0, new Object[]{"France", 67795000L})
+			.add(1, new Object[]{"New Zealand", 4725487L})
+			.add(2, new Object[]{"Japan", 126451398L})
+			.commit();
 
-			// let's read back our buckets
-			List<Bucket> buckets = kstore.getBuckets();
-
-			// selects the lines and columns we are interested in
-			final RoaringBitmap bitRowIds = new RoaringBitmap();
-			// we want to read all lines
-			bitRowIds.add(0, 100);
-			// we read all columns
-			int[] columns = new int[]{0, 1, 2, 3};
-
+			// Select the lines we are interested in. In this case, the two first lines
+			Range range = new Range(0, 2);
 			// our reading vector
-			DefaultLine line = new DefaultLine(columns.length);
-
-			// read !
-			for (final Bucket b : buckets) {
-				b.readLines(line, columns, bitRowIds, (int rowId, Line l) -> showMeTheLine(rowId, l));
-			}
-			// save our store
-			kstore.save ();
-			
-			LOGGER.info("Checking a copy of this KStore...");
-			// finally re-create a store and check 
-			DefaultKStore kstoreCopy = new DefaultKStore("TheWorld", schema, fs);
-			kstoreCopy.setDirectory(temp.toString());
-			kstoreCopy.load();
-			
-			buckets = kstoreCopy.getBuckets();
-			// read !
-			for (final Bucket b : buckets) {
-				b.readLines(line, columns, bitRowIds, (int rowId, Line l) -> showMeTheLine(rowId, l));
-			}
-			
+			Line line = new DefaultLine(0, 1);
+			bucket.readLines(line, range, (int rowId, Line l) -> showMeTheLine(rowId, l));
+			// Close
+			kstore.close();
 		} catch (IOException ex) {
 			LOGGER.error("Sample failure.", ex);
 		}
-		
-		LOGGER.info("Good bye!");
-		System.exit(0);
 	}
 
-	private static boolean showMeTheLine(int rowId, Line l) {
-		DefaultLine line = (DefaultLine) l;
+	private static boolean showMeTheLine(int rowId, Line line) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("@").append(rowId).append(" ");
 		for (Object v : line.getValues()) {

@@ -62,7 +62,7 @@ public class EditBucketTest extends StoreTest {
 			bitRowIds.add(0, 100);
 			// we read all columns
 			int[] columns = new int[]{0, 1, 2, 3};
-			DefaultLine line = new DefaultLine(columns.length);
+			DefaultLine line = new DefaultLine(columns);
 
 			// data list to check.
 			List<Object[]> dataList = new ArrayList<>(Arrays.asList(DATA));
@@ -71,7 +71,7 @@ public class EditBucketTest extends StoreTest {
 			Dumper dumper = new Dumper(dataList);
 
 			for (final Bucket b : buckets) {
-				b.readLines(line, columns, bitRowIds, (int rowId, Line l) -> dumper.dumpRow(rowId, l));
+				b.readLines(line, bitRowIds, (int rowId, Line l) -> dumper.dumpRow(rowId, l));
 			}
 			Assert.assertEquals(DATA.length - 2, dumper.getCount());
 
@@ -103,14 +103,14 @@ public class EditBucketTest extends StoreTest {
 			bitRowIds.add(0, 100);
 			// we read all columns
 			int[] columns = new int[]{0, 1, 2, 3};
-			DefaultLine line = new DefaultLine(columns.length);
+			DefaultLine line = new DefaultLine(columns);
 
 			// data list to check.
 			List<Object[]> dataList = new ArrayList<>(Arrays.asList(DATA));
 			Dumper dumper = new Dumper(dataList);
 
 			for (final Bucket b : buckets) {
-				b.readLines(line, columns, bitRowIds, (int rowId, Line l) -> dumper.dumpRow(rowId, l));
+				b.readLines(line, bitRowIds, (int rowId, Line l) -> dumper.dumpRow(rowId, l));
 			}
 			Assert.assertTrue(dumper.checkAllRead());
 

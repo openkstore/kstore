@@ -27,27 +27,19 @@ public class DefaultLine implements Line {
 
 	/** Line of values. */
 	private final Object[] values;
+	/** Columns that we want to read */
+	private final int[] columns;
 
-	public DefaultLine(int size) {
-		values = new Object[size];
+	public DefaultLine(int... columns) {
+		this.columns = columns;
+		this.values = new Object[columns.length];
 	}
 
-	/**
-	 * @see Line.addLong
-	 * @param colId
-	 * @param value
-	 */
 	@Override
 	public void addLong(int colId, long value) {
 		values[colId] = value;
 	}
 
-	/**
-	 *
-	 * @see Line.addDouble
-	 * @param colId
-	 * @param value
-	 */
 	@Override
 	public void addDouble(int colId, double value) {
 		values[colId] = value;
@@ -58,20 +50,14 @@ public class DefaultLine implements Line {
 		values[colId] = value.toString();
 	}
 
-	/**
-	 * Gets the array of values.
-	 *
-	 * @return
-	 */
+	public int[] getColumns() {
+		return columns;
+	}
+
 	public Object[] getValues() {
 		return values;
 	}
 
-	/**
-	 * Get the size of the line.
-	 *
-	 * @return
-	 */
 	public int getSize() {
 		return values.length;
 	}

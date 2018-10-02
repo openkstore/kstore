@@ -50,8 +50,7 @@ public class BucketIOSharedPool {
 	private static final AtomicLong NB_FILE_REQUESTED = new AtomicLong();
 
 	/**
-	 * THis will force the initialization of the pool, shutting down the previous pool (if it exists) and relying on the
-	 * new {@link Conf}
+	 * THis will force the initialization of the pool, shutting down the previous pool (if it exists)
 	 */
 	@VisibleForTesting
 	public static void resetInputStreamPool() {
@@ -136,6 +135,11 @@ public class BucketIOSharedPool {
 		if (SHARED_EXECUTORSERVICE.get() == null) {
 			resetInputStreamPool();
 		}
+	}
+
+	public static void closeCurrentPool() {
+		closePool(SHARED_EXECUTORSERVICE.get());
+		SHARED_EXECUTORSERVICE.set(null);
 	}
 
 	private static void closePool(ListeningExecutorService poolToClose) {

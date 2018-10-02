@@ -48,9 +48,7 @@ public abstract class StoreTest {
 		schema.add(population);
 		schema.add(density);
 
-		FileSystemDevice fs = new FileSystemDevice();
-		kstore = new DefaultKStore("TheWorld", schema, fs);
-		kstore.setDirectory("./target/buckets/");
+		kstore = new DefaultKStore("TheWorld", schema, "./target/buckets/");
 	}
 
 	/**
