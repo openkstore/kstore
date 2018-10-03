@@ -23,11 +23,30 @@ import java.util.Iterator;
 
 public class Range implements Iterable<Integer> {
 
-	private final RoaringBitmap bitmap;
+	private final RoaringBitmap bitmap = new RoaringBitmap();;
+
+	public Range(int line) {
+		addLine(line);
+	}
+
+	public Range(int[] lines) {
+		addLines(lines);
+	}
 
 	public Range(int start, int end) {
-		this.bitmap = new RoaringBitmap();
 		this.bitmap.add(start, end);
+	}
+
+	public Range addLine(int line) {
+		this.bitmap.add(line);
+		return this;
+	}
+
+	public Range addLines(int... lines) {
+		for (int line : lines) {
+			this.bitmap.add(line);
+		}
+		return this;
 	}
 
 	public RoaringBitmap getBitmap() {
