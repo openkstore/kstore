@@ -6,13 +6,13 @@
 	<parent>
 		<groupId>org.kstore</groupId>
 		<artifactId>kstore-parent</artifactId>
-		<version>1.0</version>
+		<version>0.1</version>
 	</parent>
 	
 	<groupId>org.kstore</groupId>
 	<artifactId>kstore-s3</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0</version>
+	<version>0.1</version>
 
 	<name>KStore.S3</name>
 	<description>POM for building the KStore S3</description>
@@ -37,7 +37,7 @@
 		<dependency>
 			<groupId>org.kstore</groupId>
 			<artifactId>kstore-core</artifactId>
-			<version>1.0</version>
+			<version>0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.iq80.snappy</groupId>

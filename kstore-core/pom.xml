@@ -5,13 +5,13 @@
 	<parent>
 		<groupId>org.kstore</groupId>
 		<artifactId>kstore-parent</artifactId>
-		<version>1.0</version>
+		<version>0.1</version>
 	</parent>
 	
 	<groupId>org.kstore</groupId>
 	<artifactId>kstore-core</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0</version>
+	<version>0.1</version>
 
 	<name>KStore.Core</name>
 	<description>POM for building the KStore core</description>
