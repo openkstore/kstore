@@ -25,21 +25,12 @@ public class Range implements Iterable<Integer> {
 
 	private final RoaringBitmap bitmap = new RoaringBitmap();;
 
-	public Range(int line) {
-		addLine(line);
-	}
-
-	public Range(int[] lines) {
+	public Range(int... lines) {
 		addLines(lines);
 	}
 
 	public Range(int start, int end) {
 		this.bitmap.add(start, end);
-	}
-
-	public Range addLine(int line) {
-		this.bitmap.add(line);
-		return this;
 	}
 
 	public Range addLines(int... lines) {
