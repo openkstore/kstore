@@ -42,4 +42,25 @@ public interface Line {
 	 * @param value 
 	 */
 	void addString (int colId, Str value);
+
+	/**
+	 * Gets the columns position
+	 */
+	int[] getColumns();
+
+	/**
+	 * Gets the array of values.
+	 */
+	Object[] getValues();
+
+	/**
+	 * Get the size of the line.
+	 */
+	int getSize();
+
+	/**
+	 * Reset the internal buffer
+	 */
+	void reset();
+
 }

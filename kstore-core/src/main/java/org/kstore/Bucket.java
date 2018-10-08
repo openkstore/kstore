@@ -165,7 +165,7 @@ public abstract class Bucket implements Comparable<ByteKey> {
 		out = openWrite(post);
 	}
 
-	public void add(int keyId, Object[] values) throws IOException {
+	public Bucket add(int keyId, Object[] values) throws IOException {
 		if (out == null) {
 			if (size == 0) {
 				initOut("");
@@ -209,6 +209,7 @@ public abstract class Bucket implements Comparable<ByteKey> {
 			size += fi.getSize();
 		}
 		count++;
+		return this;
 	}
 
 	public void deleteRowNum(long numLine) {
@@ -333,7 +334,11 @@ public abstract class Bucket implements Comparable<ByteKey> {
 		}
 	}
 
-	abstract public void readLines(Line line, int[] columns, RoaringBitmap bitRowIds, LineReader liner) throws IOException;
+	public void readLines(Line line, Range range, LineReader liner) throws IOException {
+		readLines(line, range.getBitmap(), liner);
+	}
+
+	abstract public void readLines(Line line, RoaringBitmap bitRowIds, LineReader liner) throws IOException;
 
 	void moveTo(String newPath) throws IOException {
 		LOGGER.info("Moving " + path + " to " + newPath);

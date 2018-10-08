@@ -59,13 +59,13 @@ public class SimpleStoreTest extends StoreTest {
 			bitRowIds.add(0, 100);
 			// we read all columns
 			int[] columns = new int[]{0, 1, 2, 3};
-			DefaultLine line = new DefaultLine(columns.length);
+			DefaultLine line = new DefaultLine(columns);
 
 			// data list to check.
 			List<Object[]> dataList = Arrays.asList(DATA);
 			Dumper dumper = new Dumper(dataList);
 			for (final Bucket b : buckets) {
-				b.readLines(line, columns, bitRowIds, (int rowId, Line l) -> dumper.dumpRow(rowId, l));
+				b.readLines(line, bitRowIds, (int rowId, Line l) -> dumper.dumpRow(rowId, l));
 			}
 			Assert.assertTrue(dumper.checkAllRead());
 
@@ -97,7 +97,7 @@ public class SimpleStoreTest extends StoreTest {
 			bitRowIds.add(0, 100);
 			// we read all columns
 			int[] columns = new int[]{0, 1, 2, 3};
-			DefaultLine line = new DefaultLine(columns.length);
+			DefaultLine line = new DefaultLine(columns);
 
 			// data list to check.
 			List<Object[]> dataList = new ArrayList<>();
@@ -106,7 +106,7 @@ public class SimpleStoreTest extends StoreTest {
 			Dumper dumper = new Dumper(dataList);
 
 			for (final Bucket b : buckets) {
-				b.readLines(line, columns, bitRowIds, (int rowId, Line l) -> dumper.dumpRow(rowId, l));
+				b.readLines(line, bitRowIds, (int rowId, Line l) -> dumper.dumpRow(rowId, l));
 			}
 			Assert.assertTrue(dumper.checkAllRead());
 
@@ -140,7 +140,7 @@ public class SimpleStoreTest extends StoreTest {
 			bitRowIds.add(4); // line 4 == DATA[1]
 			// we read all columns
 			int[] columns = new int[]{0, 1, 2, 3};
-			DefaultLine line = new DefaultLine(columns.length);
+			DefaultLine line = new DefaultLine(columns);
 
 			// data list to check.
 			ArrayList<Object[]> dataList = new ArrayList<>(6);
@@ -149,7 +149,7 @@ public class SimpleStoreTest extends StoreTest {
 			Dumper dumper = new Dumper(dataList);
 			//
 			for (final Bucket b : buckets) {
-				b.readLines(line, columns, bitRowIds, (int rowId, Line l) -> dumper.dumpRow(rowId, l));
+				b.readLines(line, bitRowIds, (int rowId, Line l) -> dumper.dumpRow(rowId, l));
 			}
 			// be sure we only read two lines
 			Assert.assertEquals(2, dumper.getCount());
@@ -185,7 +185,7 @@ public class SimpleStoreTest extends StoreTest {
 			bitRowIds.add(0, 100);
 			// we read all columns
 			int[] columns = new int[]{0, 1, 2, 3};
-			DefaultLine line = new DefaultLine(columns.length);
+			DefaultLine line = new DefaultLine(columns);
 
 			// data list to check.
 			List<Object[]> dataList = new ArrayList<>();
@@ -193,7 +193,7 @@ public class SimpleStoreTest extends StoreTest {
 			Dumper dumper = new Dumper(dataList);
 
 			for (final Bucket b : buckets) {
-				b.readLines(line, columns, bitRowIds, (int rowId, Line l) -> dumper.dumpRow(rowId, l));
+				b.readLines(line, bitRowIds, (int rowId, Line l) -> dumper.dumpRow(rowId, l));
 			}
 			Assert.assertTrue(dumper.checkAllRead());
 

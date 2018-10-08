@@ -53,7 +53,7 @@ public class MultipleInputStream implements MultiInputStream {
 				});
 			}).collect(Collectors.toList());
 			// Close streams concurrently
-			Futures.getUnchecked(Futures.allAsList(futureInputs));
+			Futures.getUnchecked(Futures.successfulAsList(futureInputs));
 		} else {
 			// Close InputStreams one after the others
 			IO.close(inputStreams);

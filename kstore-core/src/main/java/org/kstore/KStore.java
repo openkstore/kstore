@@ -15,12 +15,16 @@
  */
 package org.kstore;
 
+import org.kstore.utils.BucketIOSharedPool;
+
+import java.io.Closeable;
+import java.io.IOException;
 import java.util.List;
 
 /**
  *
  */
-public interface KStore {
+public interface KStore extends Closeable {
 
 	/**
 	 * Get the name of this store.
@@ -78,4 +82,29 @@ public interface KStore {
 	 * @return
 	 */
 	List<Bucket> getBuckets();
+
+	/**
+	 * Gets the current directory for this KStore
+	 * @return
+	 */
+	String getDirectory();
+
+	/**
+	 * Save all buckets from the device
+	 * @see org.kstore.Device
+	 * @throws IOException
+	 */
+	void save() throws IOException;
+
+	/**
+	 * Load all buckets from the device
+	 * @see org.kstore.Device
+	 * @throws IOException
+	 */
+	void load() throws IOException;
+
+	@Override
+	default void close() {
+		BucketIOSharedPool.closeCurrentPool();
+	}
 }
