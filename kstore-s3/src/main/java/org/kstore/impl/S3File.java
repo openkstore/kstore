@@ -174,18 +174,22 @@ public class S3File {
 	}
 
 	public void save() throws IOException {
-		if (local.length() < MAX_SIZE) {
-			CLIENT.putObject(bucket, key, local);
-			return;
-		}
-		// TransferManager processes all transfers asynchronously,
-		// so this call returns immediately.
-		Upload upload = transfers.upload(bucket, key, local);
 		try {
-			// wait for the upload to finish before continuing.
-			upload.waitForCompletion();
-		} catch (AmazonClientException | InterruptedException ex) {
-			throw new IOException("Save did not complete.", ex);
+			if (local.length() < MAX_SIZE) {
+				CLIENT.putObject(bucket, key, local);
+				return;
+			}
+			// TransferManager processes all transfers asynchronously,
+			// so this call returns immediately.
+			Upload upload = transfers.upload(bucket, key, local);
+			try {
+				// wait for the upload to finish before continuing.
+				upload.waitForCompletion();
+			} catch (AmazonClientException | InterruptedException ex) {
+				throw new IOException("Save did not complete.", ex);
+			}
+		} finally {
+			local.delete();
 		}
 	}
 
