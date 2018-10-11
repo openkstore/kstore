@@ -11,26 +11,10 @@
 	<groupId>org.kstore</groupId>
 	<artifactId>kstore-core</artifactId>
 	<packaging>jar</packaging>
-	<version>0.1</version>
+	<version>${kstore.version}</version>
 
 	<name>KStore.Core</name>
 	<description>POM for building the KStore core</description>
-	<organization>
-		<name>Indexima</name>
-		<url>http://www.indexima.com/</url>
-	</organization>
-	<licenses>
-		<license>
-			<name>Copyright Indexima</name>
-		</license>
-	</licenses>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-	</properties>
 
 	<dependencies>
 		<dependency>

@@ -10,13 +10,12 @@
 	<name>KStore.Parent</name>
 	<description>Parent POM for building KStore</description>
 	<inceptionYear>2018</inceptionYear>
-	<organization>
-		<name>Indexima</name>
-		<url>http://www.indexima.com/</url>
-	</organization>
 	<licenses>
 		<license>
-			<name>Copyright Indexima</name>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+			<comments/>
 		</license>
 	</licenses>
 
@@ -25,7 +24,36 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<kstore.version>0.1</kstore.version>
+		<jackson.version>2.9.5</jackson.version>
 	</properties>
+
+	<issueManagement>
+		<system>github</system>
+		<url>https://github.com/openkstore/kstore/issues</url>
+	</issueManagement>
+
+	<developers>
+		<developer>
+			<name>Eric Cournarie</name>
+			<email>eric at openkstore dot org</email>
+		</developer>
+		<developer>
+			<name>Rodolphe Dugé de Bernonville</name>
+			<email>rodolphe at openkstore dot org</email>
+		</developer>
+		<developer>
+			<name>Olivier Pitton</name>
+			<email>olivier at openkstore dot org</email>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:git@github.com:openkstore/kstore.git</connection>
+		<developerConnection>scm:git:git@github.com:openkstore/kstore.git</developerConnection>
+		<url>git@github.com:openkstore/kstore</url>
+		<tag>HEAD</tag>
+	</scm>
 
 	<modules>
 		<module>kstore-core</module>
@@ -65,15 +93,39 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-source-plugin</artifactId>
-					<version>2.4</version>
 					<executions>
 						<execution>
 							<id>attach-sources</id>
+							<phase>verify</phase>
 							<goals>
 								<goal>jar-no-fork</goal>
 							</goals>
 						</execution>
 					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<configuration>
+						<additionalparam>-Xdoclint:none</additionalparam>
+					</configuration>
+					<executions>
+						<execution>
+							<id>attach-javadocs</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>${maven.compiler.source}</source>
+						<target>${maven.compiler.target}</target>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -81,6 +133,27 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
+				<version>2.4</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.4</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.4</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.4.1</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.3.1</version>
 			</plugin>
 		</plugins>
 	</build>
