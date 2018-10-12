@@ -12,42 +12,16 @@
 	<groupId>org.kstore</groupId>
 	<artifactId>kstore-hdfs</artifactId>
 	<packaging>jar</packaging>
-	<version>0.1</version>
+	<version>${kstore.version}</version>
 
 	<name>KStore.HDFS</name>
 	<description>POM for building the KStore HDFS</description>
-	<organization>
-		<name>Indexima</name>
-		<url>http://www.indexima.com/</url>
-	</organization>
-	<licenses>
-		<license>
-			<name>Copyright Indexima</name>
-		</license>
-	</licenses>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.kstore</groupId>
 			<artifactId>kstore-core</artifactId>
-			<version>0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.iq80.snappy</groupId>
-			<artifactId>snappy</artifactId>
-			<version>0.3</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.8</version>
+			<version>${kstore.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.hadoop</groupId>
