@@ -100,6 +100,8 @@ public abstract class ColumnInput implements Closeable {
 		buf = rows = null;
 	}
 
+	public abstract byte[] readBytes() throws IOException;
+
 	public abstract Str readStr() throws IOException;
 
 	public abstract byte readByte() throws IOException;

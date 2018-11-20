@@ -17,7 +17,10 @@ package org.kstore.impl;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -49,6 +52,14 @@ public class DefaultKStore implements KStore {
 	private final List<Column> columns;
 	/** Buckets of the store. */
 	private final List<Bucket> buckets = new ArrayList<>();
+
+	public DefaultKStore(String name, List<Column> columns, File directory) {
+		this(name, columns, directory.getAbsolutePath());
+	}
+
+	public DefaultKStore(String name, List<Column> columns, Path directory) {
+		this(name, columns, directory.toString());
+	}
 
 	public DefaultKStore(String name, List<Column> columns, String directory) {
 		this(name, columns, directory, new FileSystemDevice());

@@ -31,11 +31,17 @@ public class ColumnInputSnap extends ColumnInput {
 	}
 
 	@Override
-	public Str readStr() throws IOException {
+	public byte[] readBytes() throws IOException {
 		int len = getShort();
 		byte[] buf = new byte[len];
 		getFully(buf, 0, len);
-		return new Str(buf, 0, len);
+		return buf;
+	}
+
+	@Override
+	public Str readStr() throws IOException {
+		byte[] bytes = readBytes();
+		return new Str(bytes, 0, bytes.length);
 	}
 
 	@Override

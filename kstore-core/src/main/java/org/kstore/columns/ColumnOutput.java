@@ -39,6 +39,10 @@ public abstract class ColumnOutput {
 		pos.compact();
 	}
 
+	public void writeBytes(byte[] tab) throws IOException {
+		throw new IOException("Data Type not implemented");
+	}
+
 	public void writeStr(String s) throws IOException {
 		throw new IOException("Data Type not implemented");
 	}

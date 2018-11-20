@@ -61,10 +61,15 @@ public class ColumnOutputSnap extends ColumnOutput {
 	}
 
 	@Override
+	public void writeBytes(byte[] tab) throws IOException {
+		bufData.writeShort(tab.length);
+		bufData.write(tab);
+	}
+
+	@Override
 	public void writeStr(String s) throws IOException {
 		byte[] str = s.getBytes("UTF-8");
-		bufData.writeShort(str.length);
-		bufData.write(str);
+		writeBytes(str);
 	}
 
 	@Override
