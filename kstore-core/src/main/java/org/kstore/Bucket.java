@@ -20,6 +20,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.kstore.utils.BitmapLong;
@@ -163,6 +165,10 @@ public abstract class Bucket implements Comparable<ByteKey> {
 
 	private void initOut(String post) throws IOException {
 		out = openWrite(post);
+	}
+
+	public Bucket add(int keyId, List<Object> values) throws IOException {
+		return add(keyId, values.toArray());
 	}
 
 	public Bucket add(int keyId, Object[] values) throws IOException {

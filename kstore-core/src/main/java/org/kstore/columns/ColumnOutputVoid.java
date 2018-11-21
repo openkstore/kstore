@@ -67,4 +67,7 @@ public class ColumnOutputVoid extends ColumnOutput {
 	public void writeStr(String s) throws IOException {
 	}
 
+	@Override
+	public void writeBytes(byte[] tab) throws IOException {
+	}
 }

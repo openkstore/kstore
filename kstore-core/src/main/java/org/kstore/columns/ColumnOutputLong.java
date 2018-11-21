@@ -67,8 +67,13 @@ public class ColumnOutputLong extends ColumnOutput {
 	}
 
 	@Override
+	public void writeBytes(byte[] tab) throws IOException {
+		throw new IOException("bytes[] cannot be written in a LONG column");
+	}
+
+	@Override
 	public void writeStr(String s) throws IOException {
-		throw new IOException("String  cannot be written in a LONG column");
+		throw new IOException("String cannot be written in a LONG column");
 	}
 
 	@Override

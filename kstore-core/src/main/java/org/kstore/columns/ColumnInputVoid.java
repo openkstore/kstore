@@ -70,6 +70,11 @@ public class ColumnInputVoid extends ColumnInput {
 	}
 
 	@Override
+	public byte[] readBytes() throws IOException {
+		return Str.NULL.getBuffer();
+	}
+
+	@Override
 	public Str readStr() throws IOException {
 		return Str.NULL;
 	}

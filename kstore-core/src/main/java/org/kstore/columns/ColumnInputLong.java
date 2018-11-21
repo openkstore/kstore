@@ -41,6 +41,11 @@ public class ColumnInputLong extends ColumnInput {
 	}
 
 	@Override
+	public byte[] readBytes() throws IOException {
+		throw new IOException("bytes[] cannot be read from a LONG column");
+	}
+
+	@Override
 	public Str readStr() throws IOException {
 		throw new IOException("String  cannot be read from a LONG column");
 	}
